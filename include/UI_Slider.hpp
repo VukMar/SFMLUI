@@ -38,6 +38,10 @@ void setHeadOutlineColor(sf::Color Color);
 
 void setAreaOutlineColor(sf::Color Color);
 
+void setHeadLength(float Length);
+
+void setStartingValue(int value);
+
 void checkAttributsChanges();
 
 sf::Color getHeadColor();
@@ -52,7 +56,6 @@ sf::Color getHeadOutlineColor();
 
 sf::Color getAreaOutlineColor();
 
-void setHeadLength(float Length);
 
 private:
 
@@ -61,13 +64,13 @@ bool WFocus = false;
 
 sf::Vector2f CursorPos;
 
-float HeadOutlineThickness = 0;
-float AreaOutlineThickness = 0;
+float HeadOutlineThickness = 2;
+float AreaOutlineThickness = 2;
 
-sf::Color AreaColor;
-sf::Color AreaOutlineColor;
-sf::Color HeadColor;
-sf::Color HeadOutlineColor;
+sf::Color AreaColor = sf::Color::White;
+sf::Color AreaOutlineColor = sf::Color::Black;
+sf::Color HeadColor = sf::Color::Black;
+sf::Color HeadOutlineColor = sf::Color::White;
 
 float headLength;
 

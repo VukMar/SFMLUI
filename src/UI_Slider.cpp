@@ -24,7 +24,6 @@ void Slider::create(float lenght, float thickness, sf::Vector2f Position)
     SliderHead.setSize(sf::Vector2f(thickness,thickness));
     SliderArea.setPosition(Position);
     SliderHead.setPosition(Position);
-    SliderHead.setFillColor(sf::Color::Red);
 }
 
 void Slider::Update(sf::RenderWindow &Window)
@@ -120,6 +119,30 @@ void Slider::setHeadLength(float Length)
     headLength = Length;
 }
 
+void Slider::setStartingValue(int value)
+{
+    sf::Vector2f HeadPos = SliderHead.getPosition();
+    sf::Vector2f HeadSize = SliderHead.getSize();
+
+    sf::Vector2f AreaPos = SliderArea.getPosition();
+    sf::Vector2f AreaSize = SliderArea.getSize();
+    
+    value = (value > 100)? 100 : value;
+    value = (value < 0)? 0 : value;
+    
+    percent = int(ceil(100*((HeadPos.x - AreaPos.x) / (AreaSize.x - HeadSize.x))));
+    if(percent > value)
+    {
+        SliderHead.move(-1.f,0.f);
+        setStartingValue(value);
+    }
+    if(percent < value)
+    {
+        SliderHead.move(1.f,0.f);
+        setStartingValue(value);
+    }
+}
+
 void Slider::checkAttributsChanges()
 {
     //Slider head check
@@ -145,6 +168,7 @@ void Slider::checkAttributsChanges()
         SliderArea.setOutlineColor(AreaOutlineColor);
     if(SliderArea.getOutlineThickness() != AreaOutlineThickness)
         SliderArea.setOutlineThickness(AreaOutlineThickness);
+    
 }
 
 sf::Color Slider::getHeadColor()
