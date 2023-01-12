@@ -135,7 +135,7 @@ void Console::typedOn(sf::Event Event)
             else if(Event.key.code == sf::Keyboard::Enter)
             {
                 Command = InputText;
-                std::cout << Command;
+                std::cout << Command << '\n';
                 while(!InputText.empty() && index != 0)
                 {
                     InputText.erase(index-1,1);
@@ -148,7 +148,7 @@ void Console::typedOn(sf::Event Event)
         {
             if(Event.text.unicode < 128 && Event.text.unicode != 13 && Event.text.unicode != 96)
             {
-                std::cout << Event.text.unicode << '\n';
+                std::cout << "Key code: " << Event.text.unicode << '\n';
                 //Check if backspace key is pressed for character erasing
                 if(Event.text.unicode == 8)
                 {
