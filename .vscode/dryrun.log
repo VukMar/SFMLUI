@@ -1,0 +1,11 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'd:/VS Code Vuk/SFMLUI'
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o Button.o Button.cpp
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o TextBox.o TextBox.cpp
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o TextToWindow.o TextToWindow.cpp
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o MessageBox.o MessageBox.cpp
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o CheckBox.o CheckBox.cpp
+g++  -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system  -c -o Test.o Test.cpp
+g++ -o Test.exe Button.o TextBox.o TextToWindow.o MessageBox.o CheckBox.o Test.o -IHeaders -lm -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
+make: Leaving directory 'd:/VS Code Vuk/SFMLUI'
+ 
