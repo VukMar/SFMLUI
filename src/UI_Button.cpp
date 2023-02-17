@@ -39,10 +39,12 @@ void Button::create(std::string ButtonText, int TextSize, sf::Vector2f Size, sf:
     HoverColor = ButtonHoverColor;
     changeButtonTextColor(sf::Color::White);
     changeTextOutlineColor(sf::Color::White);
-    text.setFont(font);
-    text.setCharacterSize(TextSize);
-    text.setString(ButtonText);
-    sf::FloatRect fr = text.getGlobalBounds();
+    sf::Text t;
+    t.setFont(font);
+    t.setCharacterSize(TextSize);
+    t.setString(ButtonText);
+    sf::FloatRect fr = t.getGlobalBounds();
+    text = t;
     text.setPosition(Position.x + Size.x/2 - (fr.width+fr.left)/2, Position.y + Size.y/2 - (fr.height+fr.top)/2);
 }
 
