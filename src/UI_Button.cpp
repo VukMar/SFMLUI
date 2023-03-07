@@ -186,7 +186,9 @@ void Button::changeTextOutlineColor(sf::Color Color)
 
 bool Button::mouseOverButton(sf::RenderWindow &win)
 {
-    sf::Vector2f Cursor = sf::Vector2f(sf::Mouse::getPosition(win));
+    sf::Vector2f Cursor = win.mapPixelToCoords(sf::Mouse::getPosition(win), win.getView());
+    
+
 
     if(Cursor.x > box.getPosition().x && Cursor.x < box.getPosition().x + box.getSize().x && Cursor.y > box.getPosition().y && Cursor.y < box.getPosition().y + box.getSize().y)
     {
