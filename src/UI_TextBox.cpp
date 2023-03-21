@@ -13,6 +13,54 @@ vuk.s.maric@gmail.com
 namespace vui
 {
 
+//Class NavBar
+
+NavBar::NavBar(){}
+
+void NavBar::update(sf::Font font, sf::Text text, std::string textToDisplay, int index)
+{
+    float charSize = text.getCharacterSize();
+    std::string s;
+    sf::Text t;
+    t.setFont(font);
+    t.setCharacterSize(charSize);
+    for(int i = 0; i < index; i++)
+    {
+        s+=textToDisplay[i];
+    }
+    t.setString(s);
+    sf::FloatRect fr = t.getGlobalBounds();
+    bar.setSize(sf::Vector2f(2, charSize));
+    bar.setPosition(fr.width + text.getPosition().x, text.getPosition().y);
+    bar.setFillColor(sf::Color::Black);
+
+}
+
+void NavBar::checkTimePased(float DeltaTime)
+{
+    if(seconds < 1)
+    {
+        seconds += DeltaTime;
+        if(seconds > 0.5)
+            isVisible = true;
+    }
+    else
+    {
+        seconds = 0;
+        isVisible = false;
+    }
+}
+
+void NavBar::draw(sf::RenderWindow &Window)
+{
+    if(isVisible)
+        Window.draw(bar);
+}
+
+NavBar::~NavBar(){}
+//Class TextBox
+
+
 TextBox::TextBox()
 {
 
@@ -23,17 +71,8 @@ TextBox::~TextBox()
 
 }
 
-bool TextBox::isActive(sf::RenderWindow &win)
+bool TextBox::isActive()
 {
-    if(!mouseOverBox(win))
-    {
-        wFocus = sf::Mouse::isButtonPressed(sf::Mouse::Left)? true : false;
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) Active = false;
-    }
-    if(mouseOverBox(win) && !wFocus && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        Active = true;
-    }
     return Active;
 }
 
@@ -52,7 +91,7 @@ void TextBox::create(sf::Vector2f Size, sf::Vector2f Posistion, float FontSize)
     box.setSize(Size);
     box.setPosition(Posistion);
     charSize = FontSize;
-    MaxNumberofRows = ((Size.y-10)/charSize)+1;
+    MaxNumberofRows = ((Size.y*0.8)/charSize)+1;
     createLine(FontSize);
 }
 
@@ -185,7 +224,9 @@ void TextBox::typeOn(sf::Event ev)
             warpText();
         }
         
+
     }
+    NavBar.update(font,text[rowSelected], textToDisplay[rowSelected], index);
 }
 
 void TextBox::clear()
@@ -292,17 +333,33 @@ void TextBox::setTextOutlineThickness(float Thickness)
     textOutlineThickness = Thickness;
 }
 
-void TextBox::displayTo(sf::RenderWindow &win)
+void TextBox::update(float DeltaTime, sf::RenderWindow &Window)
 {
-    win.draw(box);
+    NavBar.checkTimePased(DeltaTime);
+
+    if(!mouseOverBox(Window))
+    {
+        wFocus = sf::Mouse::isButtonPressed(sf::Mouse::Left)? true : false;
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) Active = false;
+    }
+    if(mouseOverBox(Window) && !wFocus && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        Active = true;
+    }
+}
+
+void TextBox::displayTo(sf::RenderWindow &Window)
+{
+    Window.draw(box);
     for(int i = 0; i < text.size(); i++)
     {
         if(text[i].getFillColor() != textFillColor) text[i].setFillColor(textFillColor);
         if(text[i].getOutlineColor() != textOutlineColor) text[i].setOutlineColor(textOutlineColor);
         text[i].setPosition(box.getPosition().x + 5, box.getPosition().y + 5 + (charSize*i));
-        win.draw(text[i]);
+        Window.draw(text[i]);
     }
-    drawNavBar(win);
+    if(this->isActive())
+    NavBar.draw(Window);
 }
 
 void TextBox::move(sf::Vector2f Offset)
@@ -317,9 +374,9 @@ void TextBox::move(float xOffset, float yOffset)
 
 //===============================================================================================================================================
 
-bool TextBox::mouseOverBox(sf::RenderWindow &win)
+bool TextBox::mouseOverBox(sf::RenderWindow &Window)
 {
-    sf::Vector2f cursor = sf::Vector2f(sf::Mouse::getPosition(win));
+    sf::Vector2f cursor = Window.mapPixelToCoords(sf::Mouse::getPosition(Window), Window.getView());
 
     if(cursor.x > box.getPosition().x && cursor.x < box.getPosition().x + box.getSize().x && cursor.y > box.getPosition().y && cursor.y < box.getPosition().y + box.getSize().y)
     {
@@ -354,38 +411,6 @@ bool TextBox::createLine(float FontSize)
         return true;
     }
     else return false;
-}
-
-void TextBox::createNavigationBar()
-{
-    std::string s;
-    sf::Text t;
-    t.setFont(font);
-    t.setCharacterSize(charSize);
-    for(int i = 0; i < index; i++)
-    {
-        s+=textToDisplay[rowSelected][i];
-    }
-    t.setString(s);
-    sf::FloatRect fr = t.getGlobalBounds();
-    Navbar.setSize(sf::Vector2f(2, charSize));
-    Navbar.setPosition(fr.width + text[rowSelected].getPosition().x, text[rowSelected].getPosition().y);
-    Navbar.setFillColor(sf::Color::Black);
-}
-
-void TextBox::drawNavBar(sf::RenderWindow &win)
-{
-    seconds += c.getElapsedTime().asSeconds();
-    if(Active)
-    {
-        createNavigationBar();
-        if(seconds > 0.2)
-        {
-            win.draw(Navbar);
-            if(seconds > 0.6) seconds = 0;
-        }
-    }
-    c.restart().asSeconds();
 }
 
 void TextBox::consoleLog(std::string log)

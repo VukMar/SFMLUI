@@ -89,6 +89,12 @@ public:
     /////////////////////////////////////////////////////////////////////////
     void move(float OffsetX, float OffsetY);
 
+    /////////////////////////////////////////////////////////////////////////
+    /// @brief Gets position and size of a button.
+    /// @return Returns sf::FloatRect and position and size of a button.
+    /////////////////////////////////////////////////////////////////////////
+    sf::FloatRect getBounds();
+
     void changeButtonColor(sf::Color Color);
 
     void changeButtonHoverColor(sf::Color Color);

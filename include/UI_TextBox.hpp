@@ -20,6 +20,29 @@ vuk.s.maric@gmail.com
 
 namespace vui
 {
+class NavBar
+{
+private:
+
+float seconds = 0;
+bool isVisible = false;
+sf::RectangleShape bar;
+
+public:
+
+NavBar();
+
+void update(sf::Font font, sf::Text text, std::string textToDisplay, int index);
+
+void checkTimePased(float DeltaTime);
+
+void draw(sf::RenderWindow &Window);
+
+~NavBar();
+
+};
+
+
 class TextBox
 {
 public:
@@ -37,7 +60,7 @@ public:
     ~TextBox();
 
     /*Will return true if box is active.*/
-    bool isActive(sf::RenderWindow &win);
+    bool isActive();
     
     /*Loads font from file.
     Accepts std::string type as file path.
@@ -100,8 +123,14 @@ public:
     /*Set the outline thickness of text in "px".*/
     void setTextOutlineThickness(float Thickness);
 
+    /////////////////////////////////////////////////////////////////////////
+    /// @brief Updates the state of TextBox.
+    /// @param DeltaTime Main loop, time between frames.
+    ////////////////////////////////////////////////////////////////////////
+    void update(float DeltaTime, sf::RenderWindow &Window);
+
     /*Displays box to render traget aka the window.*/
-    void displayTo(sf::RenderWindow &win);
+    void displayTo(sf::RenderWindow &Window);
 
     /*Moves the TextBox across window*/
     void move(sf::Vector2f Offset);
@@ -111,11 +140,10 @@ public:
 
 private:
 
-    sf::Clock c;
-    float seconds = 0;
-    
     bool Active = false;
     bool wFocus = false;
+    
+    NavBar NavBar;
 
     float charSize;
 
@@ -146,16 +174,10 @@ private:
     float textOutlineThickness = 0;
 
     /*Will return true if mouse cursor hovers over box.*/
-    bool mouseOverBox(sf::RenderWindow &win);
+    bool mouseOverBox(sf::RenderWindow &Window);
 
     /*Creates a new line of text*/
     bool createLine(float FontSize);
-
-    /*Creates a navigation bar based on text parameters*/
-    void createNavigationBar();
-
-    /*Draws a navigation bar to window*/
-    void drawNavBar(sf::RenderWindow &win);
     
     /*Outputs string to console for debug messages*/
     void consoleLog(std::string log);

@@ -153,6 +153,11 @@ void Button::move(float OffsetX, float OffsetY)
     }
 }
 
+sf::FloatRect Button::getBounds()
+{
+    return sf::FloatRect(box.getPosition(), box.getSize());
+}
+
 void Button::changeButtonColor(sf::Color Color)
 {
     box.setFillColor(Color);
