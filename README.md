@@ -18,9 +18,13 @@ Before using SFMLUI (VUI), you need to have SFML installed on your system. Follo
 
 ### Linux (using apt):
 
-`sudo apt-get update`
+```
+sudo apt-get update
+```
 
-`sudo apt-get install libsfml-dev`
+```
+sudo apt-get install libsfml-dev
+```
 
 ### Windows and macOS:
 
@@ -32,13 +36,15 @@ To start using SFMLUI (VUI), you can follow these steps:
 
 Clone this repository to your local machine:
 
-`
+```
 git clone https://github.com/VukMar/SFMLUI.git
-`
+```
 
 Navigate to the repository directory:
 
-`cd SFMLUI`
+```
+cd SFMLUI
+```
 
 ## License
 This project is licensed under the MIT License, which means you're free to use, modify, and distribute the code as long as you include the original copyright notice.
