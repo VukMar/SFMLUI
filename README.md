@@ -32,7 +32,9 @@ To start using SFMLUI (VUI), you can follow these steps:
 
 Clone this repository to your local machine:
 
-`git clone https://github.com/VukMar/SFMLUI.git`
+`
+git clone https://github.com/VukMar/SFMLUI.git
+`
 
 Navigate to the repository directory:
 
